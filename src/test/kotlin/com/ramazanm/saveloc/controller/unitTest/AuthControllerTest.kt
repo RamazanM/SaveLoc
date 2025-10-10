@@ -1,9 +1,10 @@
 package com.ramazanm.saveloc.controller.unitTest
 
 import com.ramazanm.saveloc.controller.AuthController
-import com.ramazanm.saveloc.controller.RegisterRequest
 import com.ramazanm.saveloc.data.model.User
 import com.ramazanm.saveloc.data.repository.UserRepository
+import com.ramazanm.saveloc.security.AuthService
+import com.ramazanm.saveloc.security.JWTService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,7 +22,8 @@ fun <T> whenever(methodCall: T): OngoingStubbing<T> = Mockito.`when`(methodCall)
 
 class AuthControllerTest {
     val mockUserRepository: UserRepository = mock()
-    val controller = AuthController(mockUserRepository)
+    val mockJwtService: JWTService = mock()
+    val controller = AuthController(AuthService(mockJwtService, mockUserRepository))
     val userList = arrayListOf<User>()
 
     @BeforeEach
@@ -31,7 +33,13 @@ class AuthControllerTest {
             userList.add(it.getArgument(0))
             return@thenAnswer User("1", "", "", "", "", listOf())
         }
-        whenever(mockUserRepository.findByEmail(anyString())).thenAnswer { return@thenAnswer userList.filter { f-> f.email== it.getArgument<User>(0).email } }
+        whenever(mockUserRepository.findByEmail(anyString())).thenAnswer {
+            return@thenAnswer userList.filter { f ->
+                f.email == it.getArgument<User>(
+                    0
+                ).email
+            }
+        }
     }
 
     @Test
@@ -72,7 +80,7 @@ class AuthControllerTest {
     }
 
     //TODO: Move these tests to correct test layer
-    fun `should throw an exception when email can not be validated`(){}
-    fun `should throw an exception when password can not be validated`(){}
+    fun `should throw an exception when email can not be validated`() {}
+    fun `should throw an exception when password can not be validated`() {}
 
 }
