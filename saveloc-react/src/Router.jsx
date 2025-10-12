@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom';
+import LoginPage from './page/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <>Home</> },
-      { path: 'login', element: <>Login</> },
+      { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <>Register</> },
     ],
   },
