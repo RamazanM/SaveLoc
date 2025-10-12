@@ -45,6 +45,7 @@ class PlacesController(val placesRepository: PlaceRepository) {
             description = req.description,
             lat = req.lat,
             long = req.long,
+            photos = req.photos
         )
         return placesRepository.save(placeToEdit)
     }

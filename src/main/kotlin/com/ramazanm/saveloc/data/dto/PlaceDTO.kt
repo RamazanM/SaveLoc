@@ -7,6 +7,7 @@ data class PlaceDTO(
     val description: String,
     val lat: Long,
     val long: Long,
+    val photos: List<String>
 ) {
     fun toPlaceEntity(userId: String) = Place(
         name = name,
@@ -16,7 +17,8 @@ data class PlaceDTO(
         createdBy = userId,
         id = null,
         createdDate = null,
-        modifiedDate = null
+        modifiedDate = null,
+        photos = photos
     )
 
 }

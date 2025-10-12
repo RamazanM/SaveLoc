@@ -15,5 +15,6 @@ data class Place(
     val long: Long,
     val createdBy: String,
     @CreatedDate val createdDate: LocalDateTime?,
-    @LastModifiedDate val modifiedDate: LocalDateTime?
+    @LastModifiedDate val modifiedDate: LocalDateTime?,
+    val photos :List<String>
 )
