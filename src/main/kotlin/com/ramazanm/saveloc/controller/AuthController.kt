@@ -7,6 +7,7 @@ import com.ramazanm.saveloc.data.model.User
 import com.ramazanm.saveloc.data.repository.UserRepository
 import com.ramazanm.saveloc.security.AuthService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = ["\${cors.url}"], maxAge = 3600)
 class AuthController constructor(val authService: AuthService) {
     @PostMapping("/register")
     fun register(@RequestBody req: RegisterRequest): String {
