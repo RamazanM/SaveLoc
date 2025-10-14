@@ -6,7 +6,7 @@ interface LoginResponse {
 }
 
 export default class LoginService {
-    async login(email: string, password: string): Promise<LoginResponse> {
+    async login(email: String, password: String): Promise<LoginResponse> {
         return AxiosInstance.post("/auth/login", {
             email: email,
             password: password
