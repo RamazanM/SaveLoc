@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
 import LoginService from "~/service/LoginService";
+import { useNavigate } from "react-router";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -18,7 +19,8 @@ export default function Login() {
   const [credentials, setCredentials] = React.useState<Credentials>({ email: "", password: "" });
   const [validations, setValidations] = React.useState<Validations>({ email: { valid: true, message: null }, password: { valid: true, message: null } })
   const [loginResponse, setLoginResponse] = React.useState("")
-
+  const navigate = useNavigate();
+  
   function validateCredentials(params: Credentials): Validations {
     const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
@@ -40,6 +42,7 @@ export default function Login() {
     if (!validationResult.email.valid || !validationResult.password.valid) return;
     new LoginService().login(credentials.email, credentials.password).then((response) => {
       if (response.success) {
+        navigate("/")
         setLoginResponse("Login successful");
       } else {
         setLoginResponse("Login failed: " + response.message);
