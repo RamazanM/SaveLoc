@@ -11,6 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Header from "./components/header";
 
 const darkTheme = createTheme({
   palette: {
@@ -40,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body suppressHydrationWarning>
           {children}
         <ScrollRestoration />
         <Scripts />
@@ -52,6 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <ThemeProvider theme={darkTheme}>
+      <Header></Header>
       <Outlet />
     </ThemeProvider>
   );
