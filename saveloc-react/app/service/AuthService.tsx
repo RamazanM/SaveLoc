@@ -1,11 +1,11 @@
 import type { LoginCredentials, LoginResponse, RegisterCredentials } from "~/common/types.js";
-import AxiosInstance from "./AxiosInstance.js";
+import axiosInstance from "./AxiosInstance";
 
 
 
 export default class AuthService {
     async login(credentials: LoginCredentials): Promise<LoginResponse> {
-        return AxiosInstance.post("/auth/login", credentials).then((response: { status: number; data: { accessToken: string; refreshToken: string } }) => {
+        return axiosInstance.post("/auth/login", credentials).then((response: { status: number; data: { accessToken: string; refreshToken: string } }) => {
             if (response.status === 200) {
                 localStorage.setItem("accessToken", response.data.accessToken);
                 localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -16,7 +16,7 @@ export default class AuthService {
     }
 
     async register(credentials: RegisterCredentials): Promise<LoginResponse> {
-        return AxiosInstance.post("/auth/register", credentials ).then((response: { status: number; data: { accessToken: string; refreshToken: string } }) => {
+        return axiosInstance.post("/auth/register", credentials ).then((response: { status: number; data: { accessToken: string; refreshToken: string } }) => {
             if (response.status === 200) {
                 return { success: true };
             }
