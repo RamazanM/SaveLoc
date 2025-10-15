@@ -21,7 +21,7 @@ export type LoginResponse = {
   message?: string;
 };
 
-export type CreateLocationRequest = {
+export type CreatePlaceRequest = {
   name: string;
   description: string;
   lat: number;
@@ -29,14 +29,14 @@ export type CreateLocationRequest = {
   photos: string[];
 };
 
-export type LocationResponse = {
+export type PlaceResponse = {
   id: string;
   name: string;
   description: string;
   lat: number;
   long: number;
   createdBy: string;
-  createdDate: string;   // ISO tarih formatı, Date yerine string kullanılıyor
+  createdDate: string;
   modifiedDate: string;
   photos: string[];
 };

@@ -1,4 +1,4 @@
-import type { LocationResponse } from "~/common/types";
+import type { PlaceResponse } from "~/common/types";
 import type { Route } from "./+types/home";
 import ProtectedRoute from "./protected-route";
 import Card from "@mui/material/Card";
@@ -6,13 +6,7 @@ import { Link } from "react-router";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import TextField from "@mui/material/TextField";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
+import AddPlaceDialog from "~/components/add-place-dialog";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
@@ -20,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const dummyData: Array<LocationResponse> = [
+const dummyData: Array<PlaceResponse> = [
   {
     id: "1a3f9b2e-8d4c-4f1a-a9d2-0b6c2f8f9e01",
     name: "Gala Gölü",
@@ -161,7 +155,7 @@ const dummyData: Array<LocationResponse> = [
   },
 ];
 
-function Place(location: LocationResponse) {
+function Place(location: PlaceResponse) {
   return (
     <Link to={"place/" + location.id}>
       <Card
@@ -196,34 +190,7 @@ export default function Places() {
           <AddIcon />
         </Fab>
       </div>
-      <Dialog open={showModal} onClose={close}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <form id="subscription-form">
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="name"
-              name="email"
-              label="Email Address"
-              type="email"
-              fullWidth
-              variant="standard"
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={close}>Cancel</Button>
-          <Button type="submit" form="subscription-form">
-            Subscribe
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <AddPlaceDialog open={showModal} onClose={close}></AddPlaceDialog>
     </ProtectedRoute>
   );
 }
