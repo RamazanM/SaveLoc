@@ -20,3 +20,23 @@ export type LoginResponse = {
   success: boolean;
   message?: string;
 };
+
+export type CreateLocationRequest = {
+  name: string;
+  description: string;
+  lat: number;
+  long: number;
+  photos: string[];
+};
+
+export type LocationResponse = {
+  id: string;
+  name: string;
+  description: string;
+  lat: number;
+  long: number;
+  createdBy: string;
+  createdDate: string;   // ISO tarih formatı, Date yerine string kullanılıyor
+  modifiedDate: string;
+  photos: string[];
+};

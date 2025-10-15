@@ -6,8 +6,8 @@ import AuthService from "~/service/AuthService";
 const authService = new AuthService();
 
 function logout() {
-    authService.logout();
-    window.location.reload(); 
+  authService.logout();
+  window.location.reload();
 }
 
 export default function Header() {
@@ -30,9 +30,14 @@ export default function Header() {
             </Link>
           </>
         ) : (
-          <Button onClick={logout} variant="outlined">
-            Logout
-          </Button>
+          <>
+            <Link to={"/places"}>
+              <Button variant="outlined">Places</Button>
+            </Link>
+            <Button onClick={logout} variant="outlined">
+              Logout
+            </Button>
+          </>
         )}
       </div>
     </header>
