@@ -14,14 +14,17 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
+const baseImageUrl = import.meta.env.VITE_BASE_API_URL+"file/"
 
-function Place(location: PlaceResponse) {
+type PlaceParameter = { location: PlaceResponse}
+
+function Place({location}:PlaceParameter) {
   return (
     <Link to={"place/" + location.id}>
       <Card
         className="relative size-full aspect-square overflow-hidden rounded-2xl shadow-md"
         style={{
-          backgroundImage: `url(${location.photos[0]})`,
+          backgroundImage: `url(${baseImageUrl+location.photos[0]})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -53,7 +56,7 @@ export default function Places() {
   return (
     <ProtectedRoute>
       <div className="max-h-svh p-10 pt-20 grid grid-cols-3 gap-5 overflow-scroll">
-        {places?.map((data, index) => Place(data))}
+        {places?.map((data, index) => (<Place location={data} ></Place>))}
       </div>
       <div className="fixed bottom-15 right-15">
         <Fab color="primary" aria-label="add" onClick={onFabClick}>

@@ -7,10 +7,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import type { CreatePlaceRequest } from "~/common/types";
+import PhotoUploadService from "~/service/PhotoUploadService";
 import PlacesService from "~/service/PlacesService";
 
 export default function AddPlaceDialog(props: DialogProps) {
-    const service = new PlacesService()
+  const placeService = new PlacesService()
+  const photoService = new PhotoUploadService()
 
   const [formData, setFormData] = useState<CreatePlaceRequest>({
     name: "",
@@ -19,8 +21,24 @@ export default function AddPlaceDialog(props: DialogProps) {
     long: 1,
     photos: [],
   });
+  const [photos, setPhotos] = useState<Array<File>>()
+
+  function handlePhotoUpload(e:React.ChangeEvent<HTMLInputElement>){
+    const fileList:FileList = e.target.files || new FileList()
+    let files = Array<File>()
+    for (let i = 0; i < fileList.length; i++) {
+      files.push(fileList.item(i)!)
+    }
+    setPhotos(files)
+    photoService.uploadPhoto(files[0]).then((res) =>{
+      const newPhotoList = formData.photos
+      newPhotoList.push(res.id)
+      setFormData({...formData, photos:newPhotoList})
+    })
+  } 
+
   function submit() {
-    service.addPlace(formData).then(res=>console.log(res)).catch(err=>console.log(err))
+    placeService.addPlace(formData).then(res=>console.log(res)).catch(err=>console.log(err))
   }
   return (
     <Dialog open={props.open} onClose={props.onClose}>
@@ -58,7 +76,12 @@ export default function AddPlaceDialog(props: DialogProps) {
           ></TextField>
         </div>
         <div>
-            Photos placeholder
+            <input type="file" onChange={handlePhotoUpload}/>
+            {photos?.map((photo, index)=>
+              (
+              <img src={URL.createObjectURL(photo)} key={index}/>
+            )
+            )}
         </div>
       </DialogContent>
       <DialogActions>
