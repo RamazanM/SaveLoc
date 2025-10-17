@@ -1,7 +1,6 @@
 package com.ramazanm.saveloc.service
 
 import com.ramazanm.saveloc.common.ResourceNotFoundException
-import com.ramazanm.saveloc.common.UnauthorizedException
 import com.ramazanm.saveloc.data.dto.UploadFileResponse
 import com.ramazanm.saveloc.data.model.FileEntity
 import com.ramazanm.saveloc.data.repository.FileRepository
@@ -52,7 +51,6 @@ class FileService(val fileRepository: FileRepository, @Value("\${dir.upload}") p
 
     override fun downloadFile(fileId: String): ResponseEntity<Any> {
         val fileEntity = fileRepository.findById(fileId).getOrNull() ?: throw ResourceNotFoundException()
-        if (fileEntity.createdBy != SecurityContextHolder.getContext().authentication.principal) throw UnauthorizedException()
         val file = File(fileEntity.path)
         val fileStreamResource = InputStreamResource(FileInputStream(file))
         val headerValue =
