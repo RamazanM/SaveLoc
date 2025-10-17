@@ -19,6 +19,13 @@ const darkTheme = createTheme({
   },
 });
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "SaveLoc" },
+    { name: "description", content: "Save and share your favorite places easily." },
+  ];
+}
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {

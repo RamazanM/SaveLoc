@@ -9,7 +9,7 @@ import type { RegisterCredentials, RegisterValidations } from "~/common/types";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "SaveLoc - Sign-Up" },
-    { name: "description", content: "Welcome to SaveLoc!" },
+    { name: "description", content: "Create your account and start saving locations!" },
   ];
 }
 
