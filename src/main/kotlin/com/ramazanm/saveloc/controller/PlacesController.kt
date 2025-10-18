@@ -23,7 +23,7 @@ class PlacesController(val placesRepository: PlaceRepository) {
     }
 
     @GetMapping("/{id}")
-    fun getPlace(@Param("id") id: String): Place {
+    fun getPlace(@PathVariable("id") id: String): Place {
         val place = placesRepository.findById(id).getOrNull() ?: throw ResourceNotFoundException()
         return place
     }
