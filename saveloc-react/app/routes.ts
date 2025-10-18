@@ -5,4 +5,5 @@ export default [
     { path: "login", file: "routes/login.tsx" },
     { path: "register", file: "routes/register.tsx" },
     { path: "places", file: "routes/places.tsx" },
+    { path: "places/:id", file: "routes/place-detail.tsx" },
 ] satisfies RouteConfig;

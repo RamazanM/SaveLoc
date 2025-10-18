@@ -19,5 +19,9 @@ export default class PlacesService {
   async getPlaces(): Promise<Array<PlaceResponse>> {
     const res = await axiosInstance.get<Array<PlaceResponse>>("/places");
     return res.data;
+  }  
+  async getPlace(id:string): Promise<PlaceResponse> {
+    const res = await axiosInstance.get<PlaceResponse>("/places/"+id);
+    return res.data;
   }
 }

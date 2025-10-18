@@ -20,7 +20,7 @@ type PlaceParameter = { location: PlaceResponse}
 
 function Place({location}:PlaceParameter) {
   return (
-    <Link to={"place/" + location.id}>
+    <Link to={location.id}>
       <Card
         className="relative size-full aspect-square overflow-hidden rounded-2xl shadow-md"
         style={{
