@@ -6,7 +6,6 @@ import com.ramazanm.saveloc.data.dto.PlaceDTO
 import com.ramazanm.saveloc.data.model.Place
 import com.ramazanm.saveloc.data.repository.PlaceRepository
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import org.springframework.data.repository.query.Param
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 import kotlin.jvm.optionals.getOrNull
@@ -35,7 +34,7 @@ class PlacesController(val placesRepository: PlaceRepository) {
     }
 
     @PutMapping("/{id}")
-    fun editPlace(@Param("id") id: String, @RequestBody req: PlaceDTO): Place {
+    fun editPlace(@PathVariable("id") id: String, @RequestBody req: PlaceDTO): Place {
         val userId = SecurityContextHolder.getContext().authentication.principal.toString()
         val placeToEdit: Place = placesRepository.findById(id).getOrNull() ?: throw ResourceNotFoundException()
         if (placeToEdit.createdBy != userId) throw UnauthorizedException()
@@ -51,7 +50,7 @@ class PlacesController(val placesRepository: PlaceRepository) {
     }
 
     @DeleteMapping("/{id}")
-    fun deletePlace(@Param("id") id: String) {
+    fun deletePlace(@PathVariable("id") id: String) {
         val userId = SecurityContextHolder.getContext().authentication.principal.toString()
         val placeToDelete = placesRepository.findById(id).getOrNull() ?: throw ResourceNotFoundException()
         if (placeToDelete.createdBy != userId) throw UnauthorizedException()
