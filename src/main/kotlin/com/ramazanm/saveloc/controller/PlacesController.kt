@@ -36,10 +36,10 @@ class PlacesController(val placesRepository: PlaceRepository) {
     @PutMapping("/{id}")
     fun editPlace(@PathVariable("id") id: String, @RequestBody req: PlaceDTO): Place {
         val userId = SecurityContextHolder.getContext().authentication.principal.toString()
-        val placeToEdit: Place = placesRepository.findById(id).getOrNull() ?: throw ResourceNotFoundException()
+        var placeToEdit: Place = placesRepository.findById(id).getOrNull() ?: throw ResourceNotFoundException()
         if (placeToEdit.createdBy != userId) throw UnauthorizedException()
 
-        placeToEdit.copy(
+        placeToEdit = placeToEdit.copy(
             name = req.name,
             description = req.description,
             lat = req.lat,
