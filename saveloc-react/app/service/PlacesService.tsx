@@ -19,9 +19,21 @@ export default class PlacesService {
   async getPlaces(): Promise<Array<PlaceResponse>> {
     const res = await axiosInstance.get<Array<PlaceResponse>>("/places");
     return res.data;
-  }  
-  async getPlace(id:string): Promise<PlaceResponse> {
-    const res = await axiosInstance.get<PlaceResponse>("/places/"+id);
+  }
+  async getPlace(id: string): Promise<PlaceResponse> {
+    const res = await axiosInstance.get<PlaceResponse>("/places/" + id);
+    return res.data;
+  }
+  async deletePlace(id: string): Promise<any> {
+    const res = await axiosInstance.delete("/places/" + id);
+    return res.data;
+  }
+
+  async updatePlace(
+    id: string,
+    place: CreatePlaceRequest
+  ): Promise<CreatePlaceResponse> {
+    const res = await axiosInstance.put("/places/" + id, place);
     return res.data;
   }
 }
