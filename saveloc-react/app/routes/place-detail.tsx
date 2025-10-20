@@ -13,6 +13,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SuccessAlert from "~/components/success-alert";
 
+import CustomMap from "~/components/custom-map";
+import { LatLng, latLng } from "leaflet";
+
 export default function PlaceDetail() {
   const baseImageUrl = import.meta.env.VITE_BASE_API_URL + "file/";
   let { id } = useParams();
@@ -51,10 +54,22 @@ export default function PlaceDetail() {
       <div className="overflow-hidden pt-26 p-50">
         <div className="flex flex-row justify-around items-center">
           <Paper elevation={3}>
-            <img
+            <CustomMap
+              selectable={isEditing}
+              center={latLng(location.lat, location.long)}
+              pin={latLng(location.lat, location.long)}
+              onSelect={(selected: LatLng) => {
+                setLocation({
+                  ...location,
+                  lat: selected.lat,
+                  long: selected.lng,
+                });
+              }}
+            ></CustomMap>
+            {/* <img
               src={baseImageUrl + location.photos[0]}
               className="aspect-square object-cover"
-            ></img>
+            ></img> */}
           </Paper>
           <div className="flex flex-col">
             <EditableText

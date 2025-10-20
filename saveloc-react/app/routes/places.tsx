@@ -24,7 +24,7 @@ export default function Places() {
     placesService.getPlaces().then((resp) => {
       setPlaces(resp);
     });
-  }, []);
+  }, [showModal]);
 
   return (
     <ProtectedRoute>
