@@ -5,8 +5,8 @@ import com.ramazanm.saveloc.data.model.Place
 data class PlaceDTO(
     val name: String,
     val description: String,
-    val lat: Long,
-    val long: Long,
+    val lat: Float,
+    val long: Float,
     val photos: List<String>
 ) {
     fun toPlaceEntity(userId: String) = Place(
