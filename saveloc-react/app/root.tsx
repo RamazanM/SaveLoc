@@ -9,6 +9,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import "leaflet/dist/leaflet.css";
 import "./app.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "./components/header";
