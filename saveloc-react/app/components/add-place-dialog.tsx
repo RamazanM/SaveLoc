@@ -16,11 +16,11 @@ import type { OsmSearchResult } from "~/service/MapService";
 import MapService from "~/service/MapService";
 import { latLng, LatLng } from "leaflet";
 import Card from "@mui/material/Card";
+import UploadFile from "./upload-file-component";
 
 type AddPlaceDialogProps = { open: boolean; onClose: () => void };
 export default function AddPlaceDialog(props: AddPlaceDialogProps) {
   const placeService = new PlacesService();
-  const photoService = new PhotoUploadService();
   const mapService = new MapService();
 
   const [formData, setFormData] = useState<CreatePlaceRequest>({
@@ -30,23 +30,12 @@ export default function AddPlaceDialog(props: AddPlaceDialogProps) {
     long: 1,
     photos: [],
   });
-  const [photos, setPhotos] = useState<Array<File>>();
   const [searchLoc, setSearchLoc] = useState<string>("");
   const [searchRes, setSearchRes] = useState<OsmSearchResult[] | null>(null);
   const [selectedLoc, setSelectedLoc] = useState<LatLng | null>(null);
 
-  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const fileList: FileList = e.target.files || new FileList();
-    let files = Array<File>();
-    for (let i = 0; i < fileList.length; i++) {
-      files.push(fileList.item(i)!);
-    }
-    setPhotos(files);
-    photoService.uploadPhoto(files[0]).then((res) => {
-      const newPhotoList = formData.photos;
-      newPhotoList.push(res.id);
-      setFormData({ ...formData, photos: newPhotoList });
-    });
+  function updatePhotoIds(fileIds: string[]) {
+    setFormData({ ...formData, photos: fileIds });
   }
 
   function search() {
@@ -140,12 +129,8 @@ export default function AddPlaceDialog(props: AddPlaceDialogProps) {
             });
           }}
         ></CustomMap>
-
         <div>
-          <input type="file" onChange={handlePhotoUpload} />
-          {photos?.map((photo, index) => (
-            <img src={URL.createObjectURL(photo)} key={index} />
-          ))}
+          <UploadFile onFileListUpdated={updatePhotoIds} />
         </div>
       </DialogContent>
       <DialogActions>

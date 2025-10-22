@@ -15,6 +15,10 @@ import SuccessAlert from "~/components/success-alert";
 
 import CustomMap from "~/components/custom-map";
 import { LatLng, latLng } from "leaflet";
+import Divider from "@mui/material/Divider";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function PlaceDetail() {
   const baseImageUrl = import.meta.env.VITE_BASE_API_URL + "file/";
@@ -53,7 +57,19 @@ export default function PlaceDetail() {
       ></SuccessAlert>
       <div className="overflow-hidden pt-26 p-50">
         <div className="flex flex-row justify-around items-center">
-          <Paper elevation={3}>
+          <Paper elevation={3} className="flex flex-col">
+            <Slider className="w-96">
+              {location.photos.map((photo) => {
+                return (
+                  <img
+                    src={baseImageUrl + photo}
+                    className=" w-96 aspect-square object-cover"
+                  ></img>
+                );
+              })}
+            </Slider>
+
+            <Divider />
             <CustomMap
               selectable={isEditing}
               center={latLng(location.lat, location.long)}
@@ -65,11 +81,7 @@ export default function PlaceDetail() {
                   long: selected.lng,
                 });
               }}
-            ></CustomMap>
-            {/* <img
-              src={baseImageUrl + location.photos[0]}
-              className="aspect-square object-cover"
-            ></img> */}
+            />
           </Paper>
           <div className="flex flex-col">
             <EditableText
