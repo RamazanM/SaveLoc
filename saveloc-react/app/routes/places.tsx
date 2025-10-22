@@ -28,7 +28,7 @@ export default function Places() {
 
   return (
     <ProtectedRoute>
-      <div className="max-h-svh p-10 pt-20 grid grid-cols-3 gap-5 overflow-scroll">
+      <div className="max-h-svh p-10 pt-20 grid grid-cols-3 gap-5 overflow-x-hidden">
         {places?.map((data, index) => (
           <Place
             key={index}
