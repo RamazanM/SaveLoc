@@ -15,7 +15,7 @@ function MapEvents(props: CustomMapProps) {
 
   const map = useMapEvents({
     click: (cl) => {
-        if(!props.selectable) return
+      if (!props.selectable) return;
       console.log(cl.latlng);
       setMarkerPosition(cl.latlng);
       props.onSelect(cl.latlng);
@@ -23,6 +23,7 @@ function MapEvents(props: CustomMapProps) {
     locationfound: (location) => {
       map.panTo(location.latlng);
       setMarkerPosition(location.latlng);
+      props.onSelect(location.latlng);
     },
   });
 
