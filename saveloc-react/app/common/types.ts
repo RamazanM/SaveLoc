@@ -29,6 +29,12 @@ export type CreatePlaceRequest = {
   photos: string[];
 };
 
+export type TokenPairResponse = {
+  accessToken: string;
+  refreshToken: string;
+  expiresAt: number;
+};
+
 export type PlaceResponse = {
   id: string;
   name: string;
