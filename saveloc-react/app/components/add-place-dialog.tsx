@@ -58,7 +58,6 @@ export default function AddPlaceDialog(props: AddPlaceDialogProps) {
     placeService
       .addPlace(formData)
       .then((res) => {
-        console.log(res);
         props.onClose();
       })
       .catch((err) => console.log(err));

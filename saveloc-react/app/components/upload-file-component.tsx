@@ -27,12 +27,8 @@ export default function UploadFile(props: UploadFileProps) {
   const [snackBarState, setSnackbarState]= useState<SnackbarState>({open:false,message:""})
 
   function addFiles(eventFiles: File[]) {
-            console.log("Add Files",eventFiles);
-            console.log("Max Upload Size",maxUploadSize);
 
-    if (eventFiles.some((it) => it.size >= maxUploadSize)) {
-        console.log("Snackbar");
-        
+    if (eventFiles.some((it) => it.size >= maxUploadSize)) {        
       showSnackbar(
         "Maximum upload limit is 21MB. Please upload another image."
       );
@@ -43,13 +39,9 @@ export default function UploadFile(props: UploadFileProps) {
         .map((it) => new FileUpload(it, "uploading", 0))
     );
     setFiles(newFiles);
-    eventFiles.filter(it=>it.size<maxUploadSize).forEach((file, index) => {
-        console.log("Size:",file.size);
-        
+    eventFiles.filter(it=>it.size<maxUploadSize).forEach((file, index) => {        
       photoUploadService
         .uploadPhoto(file, (newProgress) => {
-          console.log(newProgress);
-
           setFiles((prev: FileUpload[]) => {
             let newState = [...prev];
             let index = newState.findIndex((it) => it.file.name == file.name);
@@ -57,14 +49,11 @@ export default function UploadFile(props: UploadFileProps) {
               ...prev[index],
               progress: newProgress.progress || 0,
             };
-            console.log("After progress:", newState);
             return newState;
           });
         })
         .then((res) => {
           setFiles((prev) => {
-            console.log("successfully completed");
-
             let newState = [...prev];
             let index = newState.findIndex((it) => it.file.name == file.name);
             newState[index] = {
@@ -82,7 +71,6 @@ export default function UploadFile(props: UploadFileProps) {
         })
         .catch((err: AxiosError) => {
           console.log("Error:", err);
-
           setFiles((prev) => {
             let newState = [...prev];
             let index = newState.findIndex((it) => it.file.name == file.name);

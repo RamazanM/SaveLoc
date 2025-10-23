@@ -16,7 +16,6 @@ function MapEvents(props: CustomMapProps) {
   const map = useMapEvents({
     click: (cl) => {
       if (!props.selectable) return;
-      console.log(cl.latlng);
       setMarkerPosition(cl.latlng);
       props.onSelect(cl.latlng);
     },
@@ -28,8 +27,6 @@ function MapEvents(props: CustomMapProps) {
   });
 
   useEffect(() => {
-    console.log("effect", props.center);
-
     if (props.center == null) map.locate();
     else if (props.center != null) {
       map.panTo(props.center);
