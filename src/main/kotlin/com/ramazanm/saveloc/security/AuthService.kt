@@ -4,9 +4,12 @@ import com.ramazanm.saveloc.data.dto.RegisterRequest
 import com.ramazanm.saveloc.data.dto.TokenPairResponse
 import com.ramazanm.saveloc.data.model.User
 import com.ramazanm.saveloc.data.repository.UserRepository
+import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
+import java.util.*
 
 @Service
 class AuthService(
@@ -32,22 +35,23 @@ class AuthService(
     fun login(email: String, password: String): TokenPairResponse {
         val user = userRepository.findByEmail(email) ?: throw BadCredentialsException("Invalid credentials.")
         if (!passEncoder.matches(password, user.password)) throw BadCredentialsException("Invalid credentials.")
-        if(user.id==null) throw BadCredentialsException("Invalid credentials.")
+        if (user.id == null) throw BadCredentialsException("Invalid credentials.")
         return TokenPairResponse(
             jwtService.generateAccessToken(user.id),
-            jwtService.generateRefreshToken(user.id)
+            jwtService.generateRefreshToken(user.id),
+            Date().time + JWTService.accessTokenValidityMs
         )
     }
 
     fun refreshToken(token: String): TokenPairResponse {
-        if(!jwtService.validateRefreshToken(token)) throw IllegalArgumentException("Invalid refresh token")
+        if (!jwtService.validateRefreshToken(token)) throw ResponseStatusException(HttpStatus.UNAUTHORIZED)
         val userId = jwtService.getUserIdFromToken(token) ?: throw IllegalArgumentException("Invalid refresh token")
         return TokenPairResponse(
             jwtService.generateAccessToken(userId),
-            jwtService.generateRefreshToken(userId)
+            jwtService.generateRefreshToken(userId),
+            Date().time + JWTService.accessTokenValidityMs
         )
     }
-
 
 
 }

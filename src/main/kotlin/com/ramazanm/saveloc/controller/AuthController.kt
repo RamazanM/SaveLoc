@@ -1,6 +1,7 @@
 package com.ramazanm.saveloc.controller
 
 import com.ramazanm.saveloc.data.dto.LoginRequest
+import com.ramazanm.saveloc.data.dto.RefreshTokenRequest
 import com.ramazanm.saveloc.data.dto.RegisterRequest
 import com.ramazanm.saveloc.data.dto.TokenPairResponse
 import com.ramazanm.saveloc.security.AuthService
@@ -22,5 +23,10 @@ class AuthController constructor(val authService: AuthService) {
     fun login(@RequestBody req: LoginRequest): TokenPairResponse {
         return authService.login(req.email,req.password)
 
+    }
+
+    @PostMapping("/refresh")
+    fun refreshToken(@RequestBody refreshTokenRequest: RefreshTokenRequest): TokenPairResponse {
+        return authService.refreshToken(refreshTokenRequest.refreshToken)
     }
 }

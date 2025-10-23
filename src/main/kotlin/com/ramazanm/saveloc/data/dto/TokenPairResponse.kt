@@ -1,3 +1,3 @@
 package com.ramazanm.saveloc.data.dto
 
-data class TokenPairResponse(val accessToken: String, val refreshToken: String)
+data class TokenPairResponse(val accessToken: String, val refreshToken: String, val expiresAt: Long)
